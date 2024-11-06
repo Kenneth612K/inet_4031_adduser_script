@@ -1,22 +1,23 @@
 #!/usr/bin/python3
+#### Kenneth Keopraseuth
+#### inet_4031_adduser_script
+#### Program Creation Date: 11/6/2024
+#### Program Last Updated Date: 11/6/2024
 
-#what are these imports being used for?
-import os
-import re
-import sys
+import os #used to run system commands
+import re #used for regular expression operations
+import sys #used to read input from stdin
 
 def main():
     for line in sys.stdin:
 
-        #this "regular expression" is searching for the presence of a character - what is it and why?
+        # This regular expression checks if the line starts with '#' (indicating a comment)
         match = re.match("^#", line)
 
-        #what is this field doing?
+        # Splitting the line into fields using ':' as a delimiter
         fields = line.strip().split(':')
 
-        #what would an appropriate comment be for describing what this IF statement is checking for?
-        #what happens if the IF statement evaluates to true?
-        #how does this IF statement rely on what happened in the prior two lines of code? The match and fields lines.
+        # If the line is a comment or does not have exactly 5 fields, skip this line
         if match or len(fields) != 5:
             continue
 
@@ -34,7 +35,7 @@ def main():
         os.system(cmd)
 
         for group in groups:
-            #what is this if statement looking for?
+            # Assign the user to the specified groups, unless the group field is '-'
             if group != '-':
                 print("==> Assigning %s to the %s group..." % (username, group))
                 cmd = "/usr/sbin/adduser %s %s" % (username, group)
